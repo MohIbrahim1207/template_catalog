@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>FlowForce - Product Showcase PWA</title>
+  
+  <!-- SEO & PWA Meta -->
+  <meta name="description" content="Installable offline-capable 3D machinery and filtration systems product showcase dashboard.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FlowForce">
+  
+  <!-- Icons & Manifest -->
+  <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- Libraries (Offline Precached) -->
+  <script src="js/lib/three.min.js"></script>
+  <script src="js/lib/OrbitControls.js"></script>
+  
+  <!-- Application Code -->
+  <script src="js/fluid-sim.js" defer></script>
+  <script src="js/three-viewer.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  
+  <!-- Header Bar -->
+  <header class="global-header glass">
+    <div class="header-flow-bg"></div>
+    <div class="header-container">
+      <div class="logo-area" onclick="window.location.hash = '#home'">
+        <span class="logo-text"><span class="logo-dark">Flow</span><span class="logo-accent">Force</span></span>
+      </div>
+      
+      <!-- Breadcrumbs navigation (Non-linear drilldown) -->
+      <nav class="breadcrumbs">
+        <ul id="breadcrumbs-list" class="breadcrumbs-list">
+          <li><a href="#home">Home Hub</a></li>
+        </ul>
+      </nav>
+      
+      <!-- PWA Action & Status Overlay -->
+      <div class="header-actions">
+        <div class="connection-status glass">
+          <span id="conn-status-dot" class="status-dot online"></span>
+          <span id="conn-status-text" class="status-text">Online</span>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main Content Areas (Single Page Application Screens) -->
+  <main class="main-content">
+    
+    <!-- SCREEN 1: HOME HUB DASHBOARD -->
+    <section id="screen-home" class="spa-screen active">
+      <div class="hero-section">
+        <div class="hero-flow-bg"></div>
+        <h1 class="hero-title">FlowForce Product Catalog</h1>
+        <p class="hero-subtitle">Interactive 3D mechanical and filtration showcases for sales and executive demonstrations. Operating 100% offline.</p>
+        <div class="glowing-line"></div>
+      </div>
+      
+      <div class="sectors-grid">
+        <!-- Chemical Processing Sector Card -->
+        <div class="sector-card glass" onclick="window.location.hash = '#sector/chemical'">
+          <div class="sector-glow border-purple"></div>
+          <div class="sector-icon text-purple">🧪</div>
+          <h2 class="sector-name">Chemical Processing</h2>
+          <p class="sector-desc">Extreme-temperature, high-pressure particle catalyst recovery and gas-liquid separator columns.</p>
+          <div class="sector-meta">
+            <span class="sector-count">14 active models</span>
+            <span class="sector-link text-purple">Explore Sector &rarr;</span>
+          </div>
+        </div>
+        
+        <!-- Fluid Management Sector Card -->
+        <div class="sector-card glass" onclick="window.location.hash = '#sector/fluid'">
+          <div class="sector-glow border-blue"></div>
+          <div class="sector-icon text-blue">💧</div>
+          <h2 class="sector-name">Fluid Management</h2>
+          <p class="sector-desc">Modulating intelligent control valves with telemetry and automatic self-cleaning strainers.</p>
+          <div class="sector-meta">
+            <span class="sector-count">2 active models</span>
+            <span class="sector-link text-blue">Explore Sector &rarr;</span>
+          </div>
+        </div>
+        
+        <!-- Water Treatment Sector Card -->
+        <div class="sector-card glass" onclick="window.location.hash = '#sector/water'">
+          <div class="sector-glow border-green"></div>
+          <div class="sector-icon text-green">🌱</div>
+          <h2 class="sector-name">Water Treatment</h2>
+          <p class="sector-desc">Log 5 virus removal hollow fiber modules and high-pressure reverse osmosis desalination tubes.</p>
+          <div class="sector-meta">
+            <span class="sector-count">2 active models</span>
+            <span class="sector-link text-green">Explore Sector &rarr;</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- SCREEN 2: SECTOR GRID -->
+    <section id="screen-sector" class="spa-screen hidden">
+      <div id="sector-accent-bg" class="sector-bg-glow"></div>
+      
+      <div class="screen-header">
+        <a href="#home" class="btn btn-back">&larr; Back to Sectors</a>
+        <div class="title-wrap">
+          <h1 id="sector-title" class="section-title">Chemical Processing</h1>
+          <p id="sector-desc" class="section-subtitle">Tailored industrial filtration and separation technologies for aggressive media.</p>
+        </div>
+      </div>
+      
+      <div id="sector-grid-container" class="products-grid">
+        <!-- Dynamically injected product cards in app.js -->
+      </div>
+    </section>
+    
+    <!-- SCREEN 3: PRODUCT DEEP-DIVE -->
+    <section id="screen-product" class="spa-screen hidden">
+      <div class="screen-header">
+        <a href="#home" id="btn-product-back" class="btn btn-back">&larr; Back to Catalogue</a>
+        <div class="title-wrap">
+          <div class="badge-row">
+            <span id="product-sector-tag" class="sector-badge">Chemical</span>
+            <span id="product-tag" class="product-tag">High-Temperature Recovery</span>
+          </div>
+          <h1 id="product-title" class="product-title">Multi-Stage Catalyst Filter</h1>
+        </div>
+      </div>
+      
+      <!-- Split Layout Grid -->
+      <div class="product-split-layout">
+        
+        <!-- Left Panel: Documentation and specs tabs -->
+        <div class="product-info-panel glass">
+          <div class="specs-tab-header">
+            <button class="specs-tab-btn active" data-tab="general">General Specs</button>
+            <button class="specs-tab-btn" data-tab="features">Key Features</button>
+            <button class="specs-tab-btn" data-tab="docs">Documentation</button>
+            <button class="specs-tab-btn" data-tab="media">Product Media</button>
+          </div>
+          
+          <div class="specs-tab-content">
+            <!-- Panel 1: General Specifications -->
+            <div id="specs-panel-general" class="specs-content-panel active">
+              <p id="product-main-desc" class="product-summary-text">Loading product details...</p>
+              <div class="table-container">
+                <table class="specs-table">
+                  <thead>
+                    <tr>
+                      <th>Parameters</th>
+                      <th>Engineering Rating</th>
+                    </tr>
+                  </thead>
+                  <tbody id="specs-table-body">
+                    <!-- Dynamically injected -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <!-- Panel 2: Key Features -->
+            <div id="specs-panel-features" class="specs-content-panel">
+              <h3 class="panel-subtitle">Performance Advantages</h3>
+              <ul id="features-bullet-list" class="features-list">
+                <!-- Dynamically injected -->
+              </ul>
+            </div>
+            
+            <!-- Panel 3: Documentation -->
+            <div id="specs-panel-docs" class="specs-content-panel">
+              <h3 class="panel-subtitle">Offline Manual Cache</h3>
+              <p class="panel-description">Access localized documentation without an internet connection. Caching is fully managed by the Service Worker.</p>
+              
+              <div class="doc-download-card glass">
+                <div class="doc-card-icon">📄</div>
+                <div class="doc-card-info">
+                  <span class="doc-title">Engineering Specifications Manual</span>
+                  <span class="doc-meta">PDF Format • 2.4 MB • Available Offline</span>
+                </div>
+                <button id="btn-download-doc" class="btn btn-secondary btn-block">Download Technical Manual</button>
+              </div>
+              
+              <div class="doc-cache-badge">
+                <span class="badge-status-dot online"></span>
+                <span>Precached offline via Service Worker cache storage</span>
+              </div>
+            </div>
+
+            <!-- Panel 4: Image & Video Media -->
+            <div id="specs-panel-media" class="specs-content-panel">
+              <!-- Dynamically injected -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right Panel: Combined 3D Canvas & Video Flow Simulation -->
+        <div class="product-visuals-panel">
+          
+          <!-- Upper Half: Interactive 3D Canvas -->
+          <div class="viewer-3d-box glass">
+            <div class="viewer-header">
+              <div class="viewer-title">
+                <span class="icon">📐</span> Interactive 3D Equipment Model
+              </div>
+              <div class="viewer-hint">Drag to Rotate • Scroll to Zoom</div>
+            </div>
+            
+            <div id="canvas-3d-container" class="canvas-3d-wrapper">
+              <canvas id="three-viewer-canvas"></canvas>
+              <!-- Projects 2D markers on top of WebGL coordinates -->
+              <div id="hotspots-overlay-container" class="hotspots-overlay"></div>
+              
+              <!-- Hotspot click info popup window -->
+              <div id="hotspot-info-box" class="hotspot-popup glass">
+                <button id="hotspot-info-close" class="btn-popup-close">&times;</button>
+                <div id="hotspot-info-text">Click a numbered hotspot on the model to inspect parts.</div>
+              </div>
+
+              <!-- CAD/3D Model placeholder upload zone -->
+              <div id="cad-upload-placeholder" class="cad-upload-box" style="position: absolute; bottom: 15px; left: 15px; border: 1.5px dashed rgba(0,0,0,0.15); background: rgba(255, 255, 255, 0.9); padding: 8px 12px; border-radius: 8px; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; z-index: 100; cursor: pointer;">
+                <span>📂 Upload CAD / 3D Model (.glb, .gltf, .obj)</span>
+              </div>
+            </div>
+            
+            <div class="viewer-controls">
+              <button id="btn-3d-rotate" class="btn btn-icon btn-action active" title="Toggle Auto Rotation">
+                <span>🔄</span> Auto-Rotate
+              </button>
+              <button id="btn-3d-wireframe" class="btn btn-icon btn-action" title="Toggle Wireframe Shell">
+                <span>🕸</span> Wireframe
+              </button>
+              
+              <div class="slider-control-group glass">
+                <label for="slider-explode">Explode View:</label>
+                <input type="range" id="slider-explode" min="0" max="1" step="0.01" value="0">
+                <span id="explode-value">0%</span>
+              </div>
+              
+              <button id="btn-3d-reset" class="btn btn-secondary btn-icon" title="Reset Viewport Camera">
+                Reset
+              </button>
+            </div>
+          </div>
+          
+          <!-- Lower Half: Original Video Player / Fluid flow simulation -->
+          <div class="video-player-box glass">
+            <div class="viewer-header">
+              <div class="viewer-title">
+                <span class="icon">📺</span> Fluid-Flow Demolition Animation
+              </div>
+              <div class="viewer-hint">Simulated Video Stream</div>
+            </div>
+            
+            <div class="video-canvas-wrapper">
+              <canvas id="fluid-flow-canvas"></canvas>
+            </div>
+            
+            <!-- Custom Video Controls Overlay Bar -->
+            <div class="video-player-controls glass">
+              <button id="btn-video-play" class="btn btn-video-action" title="Play / Pause">
+                <span>⏸</span>
+              </button>
+              
+              <div class="video-timeline-group">
+                <span class="video-time">LIVE</span>
+                <div class="timeline-indicator-glow"></div>
+              </div>
+              
+              <div class="video-speed-selector">
+                <label for="select-video-speed">Speed:</label>
+                <select id="select-video-speed" class="select-dark">
+                  <option value="0.5">0.5x</option>
+                  <option value="1.0" selected>1.0x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2.0">2.0x</option>
+                </select>
+              </div>
+              
+              <!-- Real-time sliders adjusting physics velocities -->
+              <div class="video-physics-adjusters">
+                <div class="phys-slider">
+                  <label for="slider-video-flow">Flow velocity</label>
+                  <input type="range" id="slider-video-flow" min="1" max="10" step="0.2" value="5">
+                </div>
+                <div class="phys-slider">
+                  <label for="slider-video-pressure">System pressure</label>
+                  <input type="range" id="slider-video-pressure" min="1" max="10" step="0.2" value="4.5">
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer class="global-footer">
+    <div class="footer-container">
+      <span class="footer-copy">&copy; 2026 FlowForce. Industrial Filtration Showcase.</span>
+      <span class="footer-status">PWA v1.0.4 • Fully Offline precached</span>
+    </div>
+  </footer>
+  
+</body>
+</html>

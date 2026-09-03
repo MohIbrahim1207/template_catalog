@@ -1,0 +1,22 @@
+{
+  "name": "flowforce-showcase",
+  "version": "1.0.0",
+  "description": "Interactive Non-Linear 3D Product Showcase PWA",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 8080 -c-1",
+    "start": "npx http-server -p 8080 -c-1"
+  },
+  "keywords": [
+    "pwa",
+    "threejs",
+    "showcase",
+    "offline"
+  ],
+  "author": "FlowForce",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
